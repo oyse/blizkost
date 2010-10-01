@@ -1,0 +1,12 @@
+# Test that md5 works on unaligned memory blocks
+use v6;
+
+use Test;
+
+use Digest::MD5:from<perl5>;
+
+my $str = "0b100" x 20;
+$str.substr(0, 1) = "";  # chopping off first char makes the string unaligned
+
+is( Digest::MD5::md5_hex($str), 'c7ebb510e59ee96f404f288d14cc656a', 'Align');
+
